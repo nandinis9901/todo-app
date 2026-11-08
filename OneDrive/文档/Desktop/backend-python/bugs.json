@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1794097687560,
+    "title": "First bug",
+    "description": "Test",
+    "status": "Closed",
+    "priority": "Medium"
+  },
+  {
+    "id": 1794103330497,
+    "status": "Open",
+    "title": "Test bug"
+  },
+  {
+    "id": 1794103445347,
+    "status": "Open",
+    "title": "Second bug"
+  },
+  {
+    "id": 1794103653445,
+    "status": "Open",
+    "title": "Third bug"
+  },
+  {
+    "id": 1794105814912,
+    "status": "Open",
+    "title": "Login bug",
+    "priority": "High"
+  }
+]
