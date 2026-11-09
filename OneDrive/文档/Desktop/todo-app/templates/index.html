@@ -1,105 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>My To-Do App</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: white;
-            padding: 35px;
-            width: 400px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        input {
-            padding: 12px;
-            width: 60%;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button {
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        li {
-            margin-top: 20px;
-            color: #333;
-        }
-
-        .done {
-            text-decoration: line-through;
-            color: gray;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .delete{
-            background:red;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
-
-<div class="container">
-
-    <h1>📝 My To-Do App</h1>
-
-    <form action="/add" method="POST">
-        <input type="text" name="task"
-        placeholder="Enter new task" required>
-
-        <button type="submit">Add</button>
-    </form>
-
-    <ul>
-        {% for task in tasks %}
+    <div class="container">
+        <h1>📝 My To-Do App</h1>
+        
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="Enter new task" required>
+            <input type="date" name="due_date">
+            <button type="submit">Add</button>
+        </form>
+<ul>
+    {% for todo in todos %}
         <li>
-            <span class="{{ 'done' if task[2] else '' }}">
-                {{ task[1] }}
-            </span>
-
-            {% if task[2] %}
-                <a href="/undo/{{ task[0] }}">
-                    <button>Undo</button>
-                </a>
+            {% if todo.complete %}
+                <span style="text-decoration: line-through;">{{ todo.task }}</span>
             {% else %}
-                <a href="/done/{{ task[0] }}">
-                    <button>Done</button>
-                </a>
+                <span>{{ todo.task }}</span>
+            {% endif %}
+            
+            {% if todo.due_date %}
+                <small> (Due: {{ todo.due_date }})</small>
             {% endif %}
 
-            <a href="/delete/{{ task[0] }}">
-                <button class="delete">Delete</button>
-            </a>
+            {% if todo.complete %}
+                <a href="/undo/{{ todo.id }}"><button class="undo">Undo</button></a>
+            {% else %}
+                <a href="/update/{{ todo.id }}"><button class="done">Done</button></a>
+            {% endif %}
+            <a href="/delete/{{ todo.id }}"><button class="delete">Delete</button></a>
         </li>
-        {% endfor %}
-    </ul>
-
-</div>
-
+    {% endfor %}
+</ul>
+        
+    </div>
 </body>
 </html>
