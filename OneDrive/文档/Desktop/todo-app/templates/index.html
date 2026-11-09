@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My To-Do App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 35px;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        input {
+            padding: 12px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        li {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .delete{
+            background:red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📝 My To-Do App</h1>
+
+    <form action="/add" method="POST">
+        <input type="text" name="task"
+        placeholder="Enter new task" required>
+
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <span class="{{ 'done' if task[2] else '' }}">
+                {{ task[1] }}
+            </span>
+
+            {% if task[2] %}
+                <a href="/undo/{{ task[0] }}">
+                    <button>Undo</button>
+                </a>
+            {% else %}
+                <a href="/done/{{ task[0] }}">
+                    <button>Done</button>
+                </a>
+            {% endif %}
+
+            <a href="/delete/{{ task[0] }}">
+                <button class="delete">Delete</button>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+</body>
+</html>
